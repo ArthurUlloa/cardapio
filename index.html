@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burguer Master - Cardápio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ========================================
+           RESET E BASE
+        ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* ========================================
+           HEADER COMPLETO
+        ======================================== */
+        header {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .cart-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .cart-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+            padding: 0.5rem;
+        }
+
+        /* ========================================
+           HERO SECTION
+        ======================================== */
+        .hero {
+            background: linear-gradient(135deg, rgba(255,107,53,0.9), rgba(247,147,30,0.9)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23222222" width="1200" height="800"/><circle fill="%23ff6b35" opacity="0.3" cx="200" cy="200" r="150"/><circle fill="%23f7931e" opacity="0.4" cx="800" cy="300" r="200"/><circle fill="%23ff4757" opacity="0.2" cx="1000" cy="600" r="100"/></svg>');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #fff;
+            color: #ff6b35;
+            padding: 1.2rem 2.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+            border: 2px solid transparent;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255,255,255,0.4);
+            background: #f8f9fa;
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-secondary:hover {
+            background: white;
+            color: #ff6b35;
+        }
+
+        /* ========================================
+           SECTIONS GERAIS
+        ======================================== */
+        .menu-section, .about-section {
+            padding: 120px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 3.2rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            position: relative;
+            font-weight: 700;
+        }
+
+        .combos h2 {
+            font-size: 3.2rem;
+            color: #ff6b35;
+            margin-bottom: 1rem;
+            position: relative;
+            font-weight: 700;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b35, #f7931e);
+            border-radius: 3px;
+        }
+
+        .section-title p {
+            font-size: 1.25rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        /* ========================================
+           MENU GRID
+        ======================================== */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 5rem;
+        }
+
+        .menu-category {
+            background: white;
+            border-radius: 25px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .menu-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #ff6b35, #f7931e, #ff6b35);
+            background-size: 200% 100%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        .menu-category:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.15);
+        }
+
+        .category-icon {
+            font-size: 3.5rem;
+            color: #ff6b35;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .category-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .category-items {
+            list-style: none;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .menu-item:hover {
+            padding-left: 1rem;
+            background: rgba(255,107,53,0.03);
+            border-radius: 10px;
+            margin: 0 -1rem;
+            padding-right: 1rem;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .item-name {
+            font-weight: 500;
+            color: #333;
+            font-size: 1.05rem;
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: #ff6b35;
+            font-size: 1.2rem;
+        }
+
+        /* ========================================
+           COMBOS SECTION
+        ======================================== */
+        .combos {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 120px 2rem;
+            margin: 5rem 0;
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .combos::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,107,53,0.06) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .combo-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .combo-card {
+            background: white;
+            border-radius: 25px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            position: relative;
+            border-top: 5px solid #ff6b35;
+            overflow: hidden;
+        }
+
+        .combo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .combo-card:hover::before {
+            left: 100%;
+        }
+
+        .combo-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.15);
+        }
+
+        .combo-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #ff6b35;
+            margin: 1.5rem 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .combo-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .combo-includes {
+            color: #666;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .combo-includes li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .combo-includes li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* ========================================
+           CTA SECTION
+        ======================================== */
+        .cta-section {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 100px 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1.5" fill="white" opacity="0.05"/><circle cx="50" cy="10" r="0.8" fill="white" opacity="0.08"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: grain 0.2s steps(10) infinite;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .cta-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+        }
+
+        /* ========================================
+           FOOTER COMPLETO
+        ======================================== */
+        footer {
+            background: #1a1a1a;
+            color: #ccc;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .footer-section h3 {
+            color: #ff6b35;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+            line-height: 1.6;
+        }
+
+        .footer-section a:hover {
+            color: #ff6b35;
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            background: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #ff6b35;
+            transform: translateY(-3px) scale(1.1);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 2rem;
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* ========================================
+           ANIMAÇÕES
+        ======================================== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(-10px) rotate(-1deg); }
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes grain {
+            0% { transform: translate(0, 0); }
+            10% { transform: translate(-1%, -1%); }
+            20% { transform: translate(1%, 0%); }
+            30% { transform: translate(-1%, 1%); }
+            40% { transform: translate(1%, -1%); }
+            50% { transform: translate(0%, 1%); }
+            60% { transform: translate(-1%, 0%); }
+            70% { transform: translate(1%, 1%); }
+            80% { transform: translate(-1%, -1%); }
+            90% { transform: translate(1%, 0%); }
+            100% { transform: translate(0%, 0%); }
+        }
+
+        /* ========================================
+           RESPONSIVO COMPLETO
+        ======================================== */
+        @media (max-width: 1024px) {
+            .menu-grid {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: rgba(255,107,53,0.98);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                backdrop-filter: blur(20px);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .header-actions {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .menu-category {
+                padding: 2rem 1.5rem;
+            }
+
+            .combo-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .menu-section, .combos {
+                padding: 80px 1rem;
+            }
+
+            nav {
+                padding: 0 1rem;
+            }
+        }
+
+        /* ========================================
+           SCROLLBAR CUSTOMIZADA
+        ======================================== */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #e55a2b, #e6840f);
+            transform: scale(1.1);
+        }
+
+        /* ========================================
+           SCROLL BEHAVIOR
+        ======================================== */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header id="header">
+        <nav>
+            <a href="#home" class="logo">
+                <i class="fas fa-hamburger"></i>
+                Burguer Master
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#menu">Cardápio</a></li>
+                <li><a href="#combos">Combos</a></li>
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+            <div class="header-actions">
+                <button class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cartCount">0</span>
+                </button>
+            </div>
+            <div class="mobile-menu" id="mobileMenu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Burguer Master</h1>
+            <p class="subtitle">O melhor hambúrguer da cidade com ingredientes frescos e sabor inesquecível</p>
+            <div class="hero-buttons">
+                <a href="#menu" class="cta-button">
+                    <i class="fas fa-utensils"></i>
+                    Ver Cardápio
+                </a>
+                <a href="#contact" class="cta-button cta-secondary">
+                    <i class="fas fa-phone"></i>
+                    Pedir Agora
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU -->
+    <section id="menu" class="menu-section">
+        <div class="section-title">
+            <h2>Nosso Cardápio</h2>
+            <p>Escolha seu hambúrguer favorito ou crie seu combo perfeito com nossos ingredientes selecionados</p>
+        </div>
+        <div class="menu-grid">
+            <div class="menu-category">
+                <i class="fas fa-hamburger category-icon"></i>
+                <h3 class="category-title">Hambúrgueres</h3>
+                <ul class="category-items">
+                    <li class="menu-item">
+                        <span class="item-name">Clássico Burguer (180g)</span>
+                        <span class="item-price">R$ 22,90</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Cheese Burguer Duplo</span>
+                        <span class="item-price">R$ 28,90</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Burguer Bacon Supreme</span>
+                        <span class="item-price">R$ 32,90</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Master Burguer (250g)</span>
+                        <span class="item-price">R$ 36,90</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Veggie Burguer</span>
+                        <span class="item-price">R$ 27,90</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="menu-category">
+                <i class="fas fa-drumstick-bite category-icon"></i>
+                <h3 class="category-title">Acompanhamentos</h3>
+                <ul class="category-items">
+                    <li class="menu-item">
+                        <span class="item-name">Batata Frita Clássica</span>
+                        <span class="item-price">R$ 14,90</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Onion Rings Crocantes</span>
+                        <span class="item-price">R$ 17,90</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Batata Wedges Temperada</span>
+                        <span class="item-price">R$ 18,90</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Salada Fresca</span>
+                        <span class="item-price">R$ 12,90</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="menu-category">
+                <i class="fas fa-mug-hot category-icon"></i>
+                <h3 class="category-title">Bebidas</h3>
+                <ul class="category-items">
+                    <li class="menu-item">
+                        <span class="item-name">Refrigerante 350ml</span>
+                        <span class="item-price">R$ 7,90</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Cerveja Premium 600ml</span>
+                        <span class="item-price">R$ 14,90</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Suco Natural 500ml</span>
+                        <span class="item-price">R$ 11,90</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Água com ou sem gás</span>
+                        <span class="item-price">R$ 5,90</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="menu-category">
+                <i class="fas fa-ice-cream category-icon"></i>
+                <h3 class="category-title">Sobremesas</h3>
+                <ul class="category-items">
+                    <li class="menu-item">
+                        <span class="item-name">Milk Shake Premium</span>
+                        <span class="item-price">R$ 18,90</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Brownie com Sorvete</span>
+                        <span class="item-price">R$ 15,90</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Sorvete Artesanal</span>
+                        <span class="item-price">R$ 11,90</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Torta de Maçã</span>
+                        <span class="item-price">R$ 13,90</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMBOS -->
+    <section id="combos" class="combos">
+        <div class="section-title">
+            <h2 class="combo">Combos Imperdíveis</h2>
+            <p>Economize até 25% comprando nossos combos promocionais - melhor custo-benefício!</p>
+        </div>
+        <div class="combo-grid">
+            <div class="combo-card">
+                <div class="combo-price">R$ 39<span style="font-size: 0.6em;">90</span></div>
+                <h3 class="combo-title">Combo Clássico</h3>
+                <ul class="combo-includes">
+                    <li>🍔 Burguer Clássico 180g</li>
+                    <li>🍟 Batata Frita Média</li>
+                    <li>🥤 Refrigerante 350ml</li>
+                </ul>
+            </div>
+            <div class="combo-card">
+                <div class="combo-price">R$ 52<span style="font-size: 0.6em;">90</span></div>
+                <h3 class="combo-title">Combo Master</h3>
+                <ul class="combo-includes">
+                    <li>🍔 Master Burguer 250g</li>
+                    <li>🧅 Onion Rings Grande</li>
+                    <li>🍺 Cerveja 600ml</li>
+                </ul>
+            </div>
+            <div class="combo-card">
+                <div class="combo-price">R$ 68<span style="font-size: 0.6em;">90</span></div>
+                <h3 class="combo-title">Combo Família</h3>
+                <ul class="combo-includes">
+                    <li>🍔 2 Cheese Burguer Duplo</li>
+                    <li>🍟 Batata Grande</li>
+                    <li>🥤 2 Refrigerantes 350ml</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact" class="cta-section">
+        <div class="cta-content">
+            <h2>Está com Fome?</h2>
+            <p>Faça seu pedido agora mesmo e receba em casa em menos de 45 minutos ou retire no local!</p>
+            <a href="tel:+5511999999999" class="cta-button">
+                <i class="fas fa-phone"></i>
+                Ligar Agora (11) 99999-9999
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-hamburger"></i> Burguer Master</h3>
+                <p>Hambúrgueres artesanais com ingredientes frescos todos os dias. Satisfação garantida!</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fas fa-clock"></i> Horários</h3>
+                <p><strong>Segunda a Domingo</strong><br>11:00 - 23:00</p>
+                <p><strong>Delivery</strong><br>11:30 - 22:30</p>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fas fa-map-marker-alt"></i> Localização</h3>
+                <p>Rua das Delícias, 123<br>Centro - São Paulo/SP</p>
+                <a href="https://maps.google.com">Ver no Mapas</a>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fas fa-phone"></i> Contato</h3>
+                <a href="tel:+5511999999999">(11) 99999-9999</a>
+                <a href="tel:+5511888888888">(11) 88888-8888</a>
+                <a href="mailto:contato@burguermaster.com">contato@burguermaster.com</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Burguer Master. Todos os direitos reservados. | Desenvolvido com ❤️ para hambúrgueres</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT COMPLETO -->
+    <script>
+        // ========================================
+        // MENU MOBILE
+        // ========================================
+        const mobileMenu = document.getElementById('mobileMenu');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenu.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            const icon = this.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        // Fechar menu ao clicar em um link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = mobileMenu.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+        });
+
+        // ========================================
+        // SMOOTH SCROLLING
+        // ========================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ========================================
+        // HEADER SCROLL EFFECT
+        // ========================================
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 107, 53, 0.97)';
+                header.style.backdropFilter = 'blur(20px)';
+                header.style.boxShadow = '0 5px 30px rgba(0,0,0,0.2)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #ff6b35 0%, #f7931e 100%)';
+                header.style.backdropFilter = 'none';
+                header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            }
+        });
+
+        // ========================================
+        // ANIMAÇÃO ON SCROLL (Intersection Observer)
+        // ========================================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) scale(1)';
+                }
+            });
+        }, observerOptions);
+
+        // Observar todos os elementos animáveis
+        document.querySelectorAll('.menu-category, .combo-card, .section-title').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(50px) scale(0.95)';
+            el.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            observer.observe(el);
+        });
+
+        // ========================================
+        // CARRINHO SIMULADO
+        // ========================================
+        let cartCount = 0;
+        const cartCounter = document.getElementById('cartCount');
+
+        document.querySelectorAll('.menu-item, .combo-card').forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (!e.target.classList.contains('item-price')) {
+                    cartCount++;
+                    cartCounter.textContent = cartCount;
+                    cartCounter.style.background = '#ff4757';
+                    setTimeout(() => {
+                        cartCounter.style.background = 'transparent';
+                    }, 200);
+                    
+                    // Efeito de seleção
+                    this.style.background = 'rgba(255,107,53,0.1)';
+                    this.style.borderRadius = '12px';
+                    setTimeout(() => {
+                        this.style.background = '';
+                        this.style.borderRadius = '';
+                    }, 500);
+                }
+            });
+        });
+
+        const cartBtn = document.querySelector('.cart-btn');
+        cartBtn.addEventListener('click', function(e) {
+            if (cartCount > 0) {
+                alert(`Você adicionou ${cartCount} itens ao carrinho! 🎉\n\nValor total: R$ ${(cartCount * 25).toFixed(2)}`);
+                cartCount = 0;
+                cartCounter.textContent = '0';
+            } else {
+                alert('Adicione alguns itens clicando nos produtos! 🍔');
+            }
+        });
+
+        // ========================================
+        // EFEITO DE PARALLAX NO HERO
+        // ========================================
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const speed = scrolled * 0.5;
+            hero.style.transform = `translateY(${speed}px)`;
+        });
+
+        // ========================================
+        // COUNTER ANIMATION PARA COMBOS
+        // ========================================
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    start = target;
+                    clearInterval(timer);
+                }
+                element.textContent = `R$ ${start.toFixed(2)}`;
+            }, 16);
+        }
+
+        // Animação dos preços dos combos ao entrar na tela
+        const comboObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const priceEl = entry.target.querySelector('.combo-price');
+                    if (priceEl) {
+                        const priceText = priceEl.textContent;
+                        const priceValue = parseFloat(priceText.replace(/[^\d,]/g, '').replace(',', '.'));
+                        animateCounter(priceEl, priceValue);
+                    }
+                }
+            });
+        });
+
+        document.querySelectorAll('.combo-card').forEach(card => {
+            comboObserver.observe(card);
+        });
+
+        // ========================================
+        // BACK TO TOP BUTTON
+        // ========================================
+        const backToTop = document.createElement('button');
+        backToTop.innerHTML = '<i class="fas fa-chevron-up"></i>';
+        backToTop.className = 'back-to-top';
+        backToTop.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(255,107,53,0.4);
+        `;
+        document.body.appendChild(backToTop);
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 500) {
+                backToTop.style.opacity = '1';
+                backToTop.style.visibility = 'visible';
+            } else {
+                backToTop.style.opacity = '0';
+                backToTop.style.visibility = 'hidden';
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // ========================================
+        // PERFOMANCE - PRELOAD
+        // ========================================
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+        });
+
+        // Previne zoom em inputs no iOS
+        document.addEventListener('touchstart', function() {}, true);
+    </script>
+</body>
+</html>
